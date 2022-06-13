@@ -1,7 +1,20 @@
 from django.db import transaction
 from rest_framework import serializers, status
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from user import models
 from core import exception
+
+
+class UserAuthTokenSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["user"] = {
+            "username": self.user.username,
+            "rapid_api_key": self.user.rapid_api_key,
+        }
+
+        return data
 
 
 class UserRegistrationSerializer(serializers.Serializer):

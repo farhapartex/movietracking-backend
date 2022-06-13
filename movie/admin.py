@@ -6,4 +6,4 @@ from movie import models
 
 @admin.register(models.Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "year", "imdb_id", "type", "is_favorite")
+    list_display = ("id", "user", "title", "year", "imdb_id", "type", "is_favorite")
