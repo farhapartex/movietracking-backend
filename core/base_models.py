@@ -7,7 +7,7 @@ class BaseAbstractModel(models.Model):
 
     @classmethod
     def get_instance(cls, payload: dict):
-        return cls.objects.filter(**payload).first()
+        return cls.objects.filter(**payload)
 
     class Meta:
         abstract = True
