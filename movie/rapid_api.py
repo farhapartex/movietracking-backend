@@ -28,6 +28,7 @@ def search_movie_by_title(title: str, rapid_api_key: str):
     response = requests.request("GET", settings.RAPID_API_URL, headers=get_rapid_api_header(rapid_api_key), params=querystring)
     if response.status_code == status.HTTP_403_FORBIDDEN:
         return status.HTTP_403_FORBIDDEN, None
+
     res_data = response.json()
     if res_data['Response'] != "True":
         return status.HTTP_200_OK, []
@@ -39,4 +40,12 @@ def search_movie_by_title(title: str, rapid_api_key: str):
 def search_movie_by_imdb_id(imdb_id: str, rapid_api_key: str):
     querystring = {"r": "json", "i": imdb_id}
     response = requests.request("GET", settings.RAPID_API_URL, headers=get_rapid_api_header(rapid_api_key), params=querystring)
-    return response
+    if response.status_code == status.HTTP_403_FORBIDDEN:
+        return status.HTTP_403_FORBIDDEN, None
+
+    movie = response.json()
+
+    if movie['Response'] != "True":
+        return status.HTTP_200_OK, {}
+
+    return status.HTTP_200_OK, movie

@@ -23,7 +23,7 @@ class UserRegistrationSerializer(serializers.Serializer):
     rapid_api_key = serializers.CharField()
 
     def validate(self, attrs):
-        user_with_email = models.User.get_instance({"email": attrs["email"]})
+        user_with_email = models.User.get_instance({"username": attrs["email"]})
         user_with_rapid_key = models.User.get_instance({"rapid_api_key": attrs["rapid_api_key"]})
         if user_with_email or user_with_rapid_key:
             raise exception.SerializerValidationError(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, field="email", detail="User exists with the provided email or rapid api key")
