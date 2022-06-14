@@ -14,6 +14,17 @@ class Movie(base_models.BaseAbstractModel):
     poster = models.CharField(max_length=500)
     is_favorite = models.BooleanField(default=False)
     is_watched = models.BooleanField(default=False)
+    rated = models.CharField(max_length=50, blank=True, null=True)
+    runtime = models.CharField(max_length=50, blank=True, null=True)
+    genre = models.CharField(max_length=200, blank=True, null=True)
+
+    director = models.CharField(max_length=500, blank=True, null=True)
+    writer = models.CharField(max_length=500, blank=True, null=True)
+    actors = models.TextField(blank=True, null=True)
+    plot = models.TextField(blank=True, null=True)
+    language = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    awards = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.title
