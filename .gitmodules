@@ -1,0 +1,3 @@
+[submodule "movie-tracking-frontend"]
+	path = movie-tracking-frontend
+	url = https://github.com/farhapartex/movie-tracking-frontend
