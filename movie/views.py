@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import views, status, response, permissions
-from movie import serializers, models
+from movie import serializers, models, rapid_api
 
 
 # Create your views here.
@@ -29,3 +29,15 @@ class MovieListAPiView(views.APIView):
 
         data = serializers.MovieCreateSerializer(queryset, many=True).data
         return response.Response(data, status=status.HTTP_200_OK)
+
+
+class MovieSearchAPI(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        data = request.data
+        serializer = serializers.MovieSearchSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        status_code, result = rapid_api.search_movie_by_title(data['title'], request.user.rapid_api_key)
+        return response.Response(result if result else [], status=status_code)
+

@@ -154,3 +154,5 @@ SIMPLE_JWT = {
 }
 
 FRONTEND_URL = os.getenv("FRONTEND_URL")
+RAPID_API_URL = "https://movie-database-alternative.p.rapidapi.com/"
+RAPID_API_HOST = "movie-database-alternative.p.rapidapi.com"

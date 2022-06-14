@@ -20,3 +20,13 @@ class MovieCreateSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class MovieSearchSerializer(serializers.Serializer):
+    title = serializers.CharField()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
