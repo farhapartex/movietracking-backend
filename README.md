@@ -1,6 +1,6 @@
 ## Real time searching Movie info & tracking
 
-### How to Setup
+### How to Setup Backend
 
 * Clone this backend repo and navigate to the project folder
 * Create your virtual environment & turn it on by `source venv/bin/activate` where venv is the virtual env directory name
@@ -14,6 +14,13 @@
 * Run DB migration by: `python manage.py migrate`
 * Create a superuser: `python manage.py createsuperuser`, after provide a username & password. For username, please use an email
 * Run the server: `python manage.py runserver` and open the link `http://localhost:8000/`
+
+
+### Setup Frontend
+* Clone repo from this link: https://github.com/farhapartex/movie-tracking-frontend
+* Navigate to the project directory
+* Install all packages by using `yarn` command
+* Run the frontend server by `yarn start`
 
 ### How the system works
 
