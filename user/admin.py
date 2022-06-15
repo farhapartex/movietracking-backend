@@ -5,4 +5,4 @@ from user import models
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "email", "rapid_api_key", "is_staff", "is_superuser", "is_active")
+    list_display = ("id", "username", "email", "is_staff", "is_superuser", "is_active")

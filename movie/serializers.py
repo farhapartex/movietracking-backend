@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import serializers, status
 from movie import rapid_api, models as movie_models
 import time
@@ -24,7 +25,7 @@ class MovieCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         imdb_id = validated_data["imdb_id"]
         user = validated_data["user"]
-        res_status, movie_data = rapid_api.search_movie_by_imdb_id(imdb_id, user.rapid_api_key)
+        res_status, movie_data = rapid_api.search_movie_by_imdb_id(imdb_id, settings.RAPID_API_KEY)
         instance = movie_models.Movie.get_instance({"imdb_id": imdb_id, "user": user})
         if instance is None:
             movie_instance = movie_models.Movie.objects.create(**validated_data)
@@ -38,8 +39,7 @@ class MovieCreateSerializer(serializers.ModelSerializer):
         instance.is_favorite = validated_data.get("is_favorite", False) if instance.is_favorite is False else instance.is_favorite
         instance.is_watched = validated_data.get("is_watched", False) if instance.is_watched is False else instance.is_watched
 
-        res_status, movie_data = rapid_api.search_movie_by_imdb_id(imdb_id, instance.user.rapid_api_key)
-        time.sleep(1)
+        res_status, movie_data = rapid_api.search_movie_by_imdb_id(imdb_id, settings.RAPID_API_KEY)
 
         if res_status == status.HTTP_200_OK and movie_data:
             self.add_movie_util_data(movie_data, instance)

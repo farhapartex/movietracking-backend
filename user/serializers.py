@@ -10,23 +10,22 @@ class UserAuthTokenSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         data["user"] = {
-            "username": self.user.username,
-            "rapid_api_key": self.user.rapid_api_key,
+            "username": self.user.username
         }
 
         return data
 
 
 class UserRegistrationSerializer(serializers.Serializer):
+    first_name = serializers.RegexField(regex=r"^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$")
+    last_name = serializers.RegexField(regex=r"^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$")
     email = serializers.EmailField(required=True, max_length=150)
     password = serializers.CharField()
-    rapid_api_key = serializers.CharField()
 
     def validate(self, attrs):
         user_with_email = models.User.get_instance({"username": attrs["email"]})
-        user_with_rapid_key = models.User.get_instance({"rapid_api_key": attrs["rapid_api_key"]})
-        if user_with_email or user_with_rapid_key:
-            raise exception.SerializerValidationError(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, field="email", detail="User exists with the provided email or rapid api key")
+        if user_with_email:
+            raise exception.SerializerValidationError(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, field="email", detail="User exists with the provided email")
         return attrs
 
     def create(self, validated_data):

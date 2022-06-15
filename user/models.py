@@ -5,7 +5,7 @@ from core import base_models
 
 
 class User(base_models.BaseAbstractModel, dj_auth_models.AbstractUser):
-    rapid_api_key = models.CharField(max_length=100)
+    # rapid_api_key = models.CharField(max_length=100)
 
     def __str__(self):
         return self.username

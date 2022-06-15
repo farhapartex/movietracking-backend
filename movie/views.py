@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 from rest_framework import views, status, response, permissions
 from movie import serializers, models, rapid_api
 
@@ -38,6 +39,6 @@ class MovieSearchAPI(views.APIView):
         data = request.data
         serializer = serializers.MovieSearchSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        status_code, result = rapid_api.search_movie_by_title(data['title'], request.user.rapid_api_key)
+        status_code, result = rapid_api.search_movie_by_title(data['title'], settings.RAPID_API_KEY)
         return response.Response(result if result else [], status=status_code)
 
